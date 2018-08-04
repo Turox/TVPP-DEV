@@ -234,7 +234,7 @@ void Client::CyclicTimers()
 
     while (!quit)
     {
-        boost::xtime_get(&xt, boost::TIME_UTC);
+        boost::xtime_get(&xt, boost::TIME_UTC_);
         xt.nsec += step;
         
         //Each 100mS
@@ -913,7 +913,7 @@ void Client::Ping()
     
     while (!quit)
     {
-        boost::xtime_get(&xt, boost::TIME_UTC);
+        boost::xtime_get(&xt, boost::TIME_UTC_);
         xt.sec += 1;
         boost::thread::sleep(xt);
         pingMessage = NULL;
@@ -1236,7 +1236,7 @@ boost::dynamic_bitset<> Client::BytesToBitset(uint8_t* byteVector, int size)
 void Client::MontarListaPedidos()
 {
     boost::xtime xt;
-    boost::xtime_get(&xt, boost::TIME_UTC);
+    boost::xtime_get(&xt, boost::TIME_UTC_);
     xt.sec += 1;
     boost::thread::sleep(xt);
     int failureCount = 0;
@@ -1287,7 +1287,7 @@ void Client::MontarListaPedidos()
             }
         }
 
-        boost::xtime_get(&xt, boost::TIME_UTC);
+        boost::xtime_get(&xt, boost::TIME_UTC_);
         xt.nsec += sleepStep;
         boost::thread::sleep(xt);
     }
@@ -1577,7 +1577,7 @@ int Client::FeedPlayer(int32_t id)
             //Should i sleep or should i discard that chunk?
             if (waitTime < maxWaitTime) //[50ms or 3s]
             {
-                boost::xtime_get(&xt, boost::TIME_UTC);
+                boost::xtime_get(&xt, boost::TIME_UTC_);
                 xt.nsec += 10000000; //10ms
                 //cout<<"SEM MEDIA ";
                 boost::thread::sleep(xt);

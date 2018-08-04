@@ -457,7 +457,7 @@ void Bootstrap::CheckPeerList() {
 	boost::mutex::scoped_lock channelListLock(channelListMutex);
 	channelListLock.unlock();
 	while (true) {
-		boost::xtime_get(&xt, boost::TIME_UTC);
+		boost::xtime_get(&xt, boost::TIME_UTC_);
 		xt.sec += 1;
 
 		cout << "#";
@@ -507,7 +507,7 @@ void Bootstrap::HTTPLog() {
 	int html_update_time = 0;
 	//vector<bool> vetor;
 	while (true) {
-		boost::xtime_get(&xt, boost::TIME_UTC);
+		boost::xtime_get(&xt, boost::TIME_UTC_);
 		xt.sec += 2;
 
 		if (last_logs.size() >= 60)
