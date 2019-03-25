@@ -114,6 +114,7 @@ Message *Bootstrap::HandleChannelMessage(MessageChannel* message, string sourceA
 
 				}
 
+				// ADS Essa são as redes paralelas?
 				if (auxiliarServerCandidate){
 					channelList[channelId].analizePeerToBeServerAux(source);
 				}
@@ -460,7 +461,7 @@ void Bootstrap::CheckPeerList() {
 		boost::xtime_get(&xt, boost::TIME_UTC_);
 		xt.sec += 1;
 
-		cout << "#";
+		//cout << "#";
 		channelListLock.lock();
 		vector<unsigned int> deletedChannel;
 		for (map<unsigned int, Channel>::iterator channel = channelList.begin();
@@ -478,7 +479,7 @@ void Bootstrap::CheckPeerList() {
 			cout << "Channel " << *it << " removed" << endl;
 		}
 		channelListLock.unlock();
-		cout << "#" << endl;
+		//cout << "#" << endl;
 
 		boost::thread::sleep(xt);
 	}
