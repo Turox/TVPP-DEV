@@ -114,7 +114,7 @@ Message *Bootstrap::HandleChannelMessage(MessageChannel* message, string sourceA
 
 				}
 
-				// ADS Essa são as redes paralelas?
+				// ACS Essa são as redes paralelas?
 				if (auxiliarServerCandidate){
 					channelList[channelId].analizePeerToBeServerAux(source);
 				}

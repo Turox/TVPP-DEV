@@ -222,7 +222,7 @@ bool Channel::AddPeerChannel(Peer *peer) {
 }
 
 
-// ADS paralelas
+// ACS paralelas
 /* ECM Considera que nenhum subchannel foi criado e que a
  * lista de candidatos tem a quantidade necessária para
  * criar os subchannel com os servidores em cluster.
@@ -482,6 +482,7 @@ vector<PeerData *> Channel::MakeServerAuxList() {
 }
 
 
+//ACS Seleciona peers parceiros
 /* É necessário filtrar parceiros neste método apenas quando o channel está em ChannelMode MODE_FLASH_CROWD.
 * Isso porque em qualquer outro estado, os pares podem se conhecer mutuamente. O filtro no caso MODE_FLASH_CROWD
 * garante que as redes (paralelas e principal) serão isoladas.
@@ -502,8 +503,7 @@ vector<PeerData *> Channel::SelectPeerList(Strategy *strategy, Peer *srcPeer, un
                 else if (srcPeer->GetIP() != i->second.GetPeer()->GetIP())
                     allPeers.push_back(&(i->second));
             }
-    } else  //Modo flash crowd com subcanais isolados ou mesclando
-    {
+    } else { //Modo flash crowd com subcanais isolados ou mesclando
         /* Garante fazer a vizinhança apenas com os pares que estão no mesmo subcanal
          * Atende ao caso de só haver o canal principal
          * Se for flash crowd, preserva na íntegra os subcanais.
