@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(TVPP)
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+set(Boost_USE_STATIC_LIBS   ON)
 set(TEMPORIZABLE_SOURCES
         client/Temporizable/LeakyBucket.cpp
         client/Temporizable/Disconnector.cpp
@@ -56,38 +58,50 @@ set(LIBS
         boost_system
         )
 
-find_package(Boost)
-if (Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    add_executable(bootstrap
-            bootstrap/main.cpp
-            bootstrap/bootstrap.cpp
-            bootstrap/bootstrap-session.cpp
-            bootstrap/bootstrap-tcp-server.cpp
-            ${COMMON_SOURCES}
-            )
-    add_executable(client
-            client/main.cpp
-            client/client.cpp
-            client/Statistics.cpp
-            client/MediaBuffer.cpp
-            client/PeerManager.cpp
-            client/PeerManagerServerAux.cpp
-            client/Request.cpp
-            client/RequestAttempt.cpp
-            client/client-player-session.cpp
-            client/client-tcp-server.cpp
-            client/client-bootstrap-session.cpp
-            ${COMMON_SOURCES}
-            ${TEMPORIZABLE_SOURCES}
-            )
+find_package(Boost REQUIRED)
 
-    add_executable(externalMessage
-            externalMessage/main.cpp
-            externalMessage/externalMessageTCP.cpp
-            ${COMMON_SOURCES}
-            )
-    target_link_libraries(bootstrap ${LIBS})
-    target_link_libraries(client ${LIBS})
-    target_link_libraries(externalMessage ${LIBS})
-endif ()
+
+MESSAGE("Boost information:")
+MESSAGE("  BOOST_ROOT: ${BOOST_ROOT}")
+MESSAGE("  Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
+MESSAGE("  Boost_LIBRARIES: ${Boost_LIBRARIES}")
+MESSAGE("  Boost_LIBRARY_DIRS: ${Boost_LIBRARY_DIRS}")
+MESSAGE("  BOOST_LIBRARYDIR : ${BOOST_LIBRARYDIR}")
+MESSAGE("  BOOST_INCLUDEDIR : ${BOOST_INCLUDEDIR}")
+
+
+
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+
+add_executable(bootstrap
+        bootstrap/main.cpp
+        bootstrap/bootstrap.cpp
+        bootstrap/bootstrap-session.cpp
+        bootstrap/bootstrap-tcp-server.cpp
+        ${COMMON_SOURCES}
+        )
+add_executable(client
+        client/main.cpp
+        client/client.cpp
+        client/Statistics.cpp
+        client/MediaBuffer.cpp
+        client/PeerManager.cpp
+        client/PeerManagerServerAux.cpp
+        client/Request.cpp
+        client/RequestAttempt.cpp
+        client/client-player-session.cpp
+        client/client-tcp-server.cpp
+        client/client-bootstrap-session.cpp
+        ${COMMON_SOURCES}
+        ${TEMPORIZABLE_SOURCES}
+        )
+
+add_executable(externalMessage
+        externalMessage/main.cpp
+        externalMessage/externalMessageTCP.cpp
+        ${COMMON_SOURCES}
+        )
+target_link_libraries(bootstrap ${LIBS})
+target_link_libraries(client ${LIBS})
+target_link_libraries(externalMessage ${LIBS})
