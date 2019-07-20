@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(TVPP)
-
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 set(TEMPORIZABLE_SOURCES
         client/Temporizable/LeakyBucket.cpp
